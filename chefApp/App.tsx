@@ -4,8 +4,21 @@ import { Picker } from '@react-native-picker/picker';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ScreenProps } from 'react-native-screens';
 
-// Dummy menu data with ingredients
+import { StackNavigationProp } from '@react-navigation/stack';
+
+type RootStackParamList = {
+  Login: undefined;
+  Menu: undefined;
+  AddDish: undefined;
+};
+type LoginScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Login'
+>;
+
+
 const MENU = [
   {
     id: '1',
@@ -28,23 +41,27 @@ const MENU = [
 ];
 
 // Login Screen
-function LoginScreen({ navigation }) {
+function LoginScreen({ navigation }: { navigation: LoginScreenNavigationProp }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Chef App Login</Text>
       <Button
         title="Login"
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('Menu')}
       />
     </View>
   );
 }
 
-// Menu Screen with Ingredients
-function MenuScreen({ navigation }) {
+type MenuScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Menu'
+>;
+
+// Menu Screen with 
+function MenuScreen({ navigation }: { navigation: MenuScreenNavigationProp}) {
   return (
     <View style={styles.container}>
-      {/* Header with border */}
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Chef App</Text>
       </View>
@@ -68,22 +85,27 @@ function MenuScreen({ navigation }) {
   );
 }
 
+type AddDishScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'AddDish'
+>;
+
 // Prepared Menu Screen
-function AddDishScreen({ navigation }) {
+function AddDishScreen({ navigation }: { navigation: AddDishScreenNavigationProp}) {
   const [dishName, setDishName] = useState('');
   const [dishDescription, setDishDescription] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
   const [price, setPrice] = useState('');
 
   const saveDish = () => {
-    // Here you could handle saving the dish, e.g., updating state or sending it to a backend
+    // Here you could handle saving the dish,
     console.log({
       dishName,
       dishDescription,
       selectedCourse,
       price
     });
-    // After saving, navigate back to the menu or show a confirmation
+    // After saving, navigate back to the menu 
     navigation.navigate('Menu');
   };
 
@@ -150,7 +172,7 @@ function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="" component={MenuStack} />
+        <Tab.Screen name="  " component={MenuStack} />
         <Tab.Screen name="Add Dish" component={AddDishScreen} />
       </Tab.Navigator>
     </NavigationContainer>
@@ -168,11 +190,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
   },
   headerContainer: {
-    borderWidth: 2,  // Border around the header
-    borderColor: '#000',  // Black border color
+    borderWidth: 2,  
+    borderColor: '#000',  
     padding: 10,
-    borderRadius: 8,  // Rounded corners
-    marginBottom: 20,  // Space below the header
+    borderRadius: 8,  
+    marginBottom: 20,  
   },
   headerText: {
     fontSize: 24,
